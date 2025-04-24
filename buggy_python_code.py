@@ -23,16 +23,12 @@ def print_nametag(format_string, person):
     print(format_string.format(person=person))
 
 
-import urllib3
-
 def fetch_website(urllib_version, url):
-    if urllib_version == 2:
-        import urllib2 as urllib
-    elif urllib_version == 3:
-        import urllib.request as urllib
-
-    try:
-        http = urllib3.PoolManager()
+    # Import the requested version (2 or 3) of urllib
+exec(f"import urllib{urllib_version} as urllib", globals())
+   # Fetch and print the requested URL
+try:
+    http = urllib.PoolManager()
         response = http.request('GET', url)
         print(response.data.decode('utf-8'))
     except Exception as e:
